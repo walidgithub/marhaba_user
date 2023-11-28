@@ -1375,6 +1375,7 @@ etaRequest() async {
   dynamic result;
 
   try {
+    print('startttttttt');
     var response = await http.post(Uri.parse('${url}api/v1/request/eta'),
         headers: {
           'Authorization': 'Bearer ${bearerToken[0].token}',
@@ -1460,14 +1461,19 @@ etaRequest() async {
                   }));
 
     if (response.statusCode == 200) {
+      print('200000000000');
       etaDetails = jsonDecode(response.body)['data'];
+      print(etaDetails);
       choosenVehicle =
           etaDetails.indexWhere((element) => element['is_default'] == true);
       result = true;
       valueNotifierBook.incrementNotifier();
+      print('doneeeeee');
     } else if (response.statusCode == 401) {
+      print('4011111111');
       result = 'logout';
     } else {
+      print('else errorrrrrrr');
       debugPrint(response.body);
       if (jsonDecode(response.body)['message'] ==
           "service not available with this location") {

@@ -116,6 +116,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
     currentpage = true;
 
     getLocs();
+    print('000000000000000000000');
+    print(choosenVehicle);
 
     super.initState();
   }
@@ -444,7 +446,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
         await getBytesFromAsset('assets/images/bike.png', 40);
     pinLocationIcon2 = BitmapDescriptor.fromBytes(markerIcon2);
 
-    choosenVehicle = null;
+    print('111111111111111111');
+    choosenVehicle = 0;
     _dist = null;
 
     if (widget.type == 2) {
@@ -650,6 +653,13 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                 });
                                 // ignore: avoid_function_literals_in_foreach_calls
                                 driversData.forEach((e) {
+                                  print('inerrrrrrrrrrrrrrrrrr');
+                                  print(e['vehicle_types']);
+                                  print(etaDetails);
+                                  print(choosenVehicle);
+                                  choosenVehicle = 0;
+                                  print(etaDetails[choosenVehicle]['type_id']);
+
                                   if (e['is_active'] == 1 &&
                                       e['is_available'] == true) {
                                     if (((e['vehicle_types'] != null &&
@@ -1545,6 +1555,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                                     return InkWell(
                                                                                       onTap: () {
                                                                                         setState(() {
+                                                                                          print('222222222222222');
                                                                                           choosenVehicle = i;
                                                                                         });
                                                                                       },
@@ -1710,6 +1721,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                                           setState(() {
                                                                                             rentalOption = etaDetails[i]['typesWithPrice']['data'];
                                                                                             rentalChoosenOption = i;
+                                                                                            print('333333333333');
                                                                                             choosenVehicle = null;
                                                                                             payingVia = 0;
                                                                                           });
@@ -1804,6 +1816,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                                               return InkWell(
                                                                                                 onTap: () {
                                                                                                   setState(() {
+                                                                                                    print('444444444444');
                                                                                                     choosenVehicle = i;
                                                                                                   });
                                                                                                 },
@@ -2237,10 +2250,33 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                   0.9,
                                                           color: buttonColor,
                                                           onTap: () async {
-                                                            if (((rentalOption.isEmpty && (etaDetails[choosenVehicle]['user_wallet_balance'] >= etaDetails[choosenVehicle]['total'] && etaDetails[choosenVehicle]['has_discount'] == false) || (rentalOption.isEmpty && etaDetails[choosenVehicle]['has_discount'] == true && etaDetails[choosenVehicle]['user_wallet_balance'] >= etaDetails[choosenVehicle]['discounted_totel'])) ||
-                                                                    (rentalOption.isEmpty &&
-                                                                        etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] !=
-                                                                            'wallet')) ||
+                                                            print('when ride now');
+                                                            print(choosenVehicle);
+                                                            print(etaDetails);
+                                                            print(etaDetails[choosenVehicle]['user_wallet_balance']); // null
+                                                            print(etaDetails[choosenVehicle]['total']);
+                                                            print(etaDetails[choosenVehicle]['has_discount']);
+                                                            print(etaDetails[choosenVehicle]['discounted_totel']); //null
+                                                            print(rentalOption); // []
+                                                            print(etaDetails[choosenVehicle]['payment_type']);
+
+                                                            // print(rentalOption[choosenVehicle]['fare_amount']);
+                                                            // print(rentalOption[choosenVehicle]['has_discount']);
+                                                            // print(rentalOption[choosenVehicle]['user_wallet_balance']);
+                                                            // print(rentalOption[choosenVehicle]['discounted_totel']);
+                                                            // print(rentalOption[choosenVehicle]['payment_type']);
+                                                            if ((
+                                                                (rentalOption.isEmpty && (
+                                                                    etaDetails[choosenVehicle]['user_wallet_balance']
+                                                                    >= etaDetails[choosenVehicle]['total']
+                                                                    && etaDetails[choosenVehicle]['has_discount'] == false)
+                                                                    || (rentalOption.isEmpty && etaDetails[choosenVehicle]['has_discount']
+                                                                        == true && etaDetails[choosenVehicle]['user_wallet_balance']
+                                                                        >= etaDetails[choosenVehicle]['discounted_totel']))
+                                                                    ||
+                                                                    (rentalOption.isEmpty && etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] != 'wallet')
+                                                            )
+                                                            ||
                                                                 ((rentalOption
                                                                             .isNotEmpty &&
                                                                         etaDetails[0]['user_wallet_balance'] >=
@@ -2256,7 +2292,9 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                                 'discounted_totel']) ||
                                                                     rentalOption.isNotEmpty &&
                                                                         rentalOption[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] !=
-                                                                            'wallet')) {
+                                                                            'wallet')
+                                                            ) {
+                                                              print('passsssssss');
                                                               setState(() {
                                                                 _isLoading =
                                                                     true;
