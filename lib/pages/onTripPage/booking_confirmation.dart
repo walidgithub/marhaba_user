@@ -650,6 +650,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                 });
                                 // ignore: avoid_function_literals_in_foreach_calls
                                 driversData.forEach((e) {
+                                  // here 0000000000000000000000
                                   // choosenVehicle return -1 it must be 0
                                   if (e['is_active'] == 1 &&
                                       e['is_available'] == true) {
