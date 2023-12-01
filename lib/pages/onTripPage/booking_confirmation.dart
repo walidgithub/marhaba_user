@@ -444,7 +444,9 @@ class _BookingConfirmationState extends State<BookingConfirmation>
     await getBytesFromAsset('assets/images/bike.png', 40);
     pinLocationIcon2 = BitmapDescriptor.fromBytes(markerIcon2);
 
-    choosenVehicle = null;
+    // choosenVehicle = null;
+    print('1111111111111');
+    choosenVehicle = 0;
     _dist = null;
 
     if (widget.type == 2) {
@@ -652,6 +654,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                 driversData.forEach((e) {
                                   // here 0000000000000000000000
                                   // choosenVehicle return -1 it must be 0
+                                  print('choosenVehicle');
+                                  print(choosenVehicle);
                                   if (e['is_active'] == 1 &&
                                       e['is_available'] == true) {
                                     if (((e['vehicle_types'] != null &&
@@ -1547,6 +1551,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                       return InkWell(
                                                                         onTap: () {
                                                                           setState(() {
+                                                                            print('222222222222');
                                                                             choosenVehicle = i;
                                                                           });
                                                                         },
@@ -1712,7 +1717,9 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                         setState(() {
                                                                           rentalOption = etaDetails[i]['typesWithPrice']['data'];
                                                                           rentalChoosenOption = i;
-                                                                          choosenVehicle = null;
+                                                                          // choosenVehicle = null;
+                                                                          print('3333333333');
+                                                                          choosenVehicle = 0;
                                                                           payingVia = 0;
                                                                         });
                                                                       },
@@ -1806,6 +1813,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                             return InkWell(
                                                                               onTap: () {
                                                                                 setState(() {
+                                                                                  print('44444444444');
                                                                                   choosenVehicle = i;
                                                                                 });
                                                                               },
@@ -1923,6 +1931,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                   widget.type != 1)
                                                   ? InkWell(
                                                 onTap: () {
+                                                  choosenVehicle = 0;
+                                                  print('typed hereeeeeee');
                                                   setState(() {
                                                     _choosePayment =
                                                     true;
@@ -1979,7 +1989,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                             width: media
                                                                 .width *
                                                                 0.06,
-                                                            child: (etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] ==
+                                                            child: (etaDetails[0]['payment_type'].toString().split(',').toList()[payingVia] ==
                                                                 'cash')
                                                                 ? Image
                                                                 .asset(
@@ -2008,7 +2018,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                 .start,
                                                             children: [
                                                               Text(
-                                                                etaDetails[choosenVehicle]['payment_type']
+                                                                etaDetails[0]['payment_type']
                                                                     .toString()
                                                                     .split(',')
                                                                     .toList()[payingVia]
@@ -2018,16 +2028,16 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                     fontSize: media.width * fourteen,
                                                                     fontWeight: FontWeight.w600),
                                                               ),
-                                                              (etaDetails[choosenVehicle]['has_discount'] ==
+                                                              (etaDetails[0]['has_discount'] ==
                                                                   false)
                                                                   ? Text(
-                                                                (etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] == 'cash')
+                                                                (etaDetails[0]['payment_type'].toString().split(',').toList()[payingVia] == 'cash')
                                                                     ? languages[choosenLanguage]['text_paycash']
-                                                                    : (etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] == 'wallet')
+                                                                    : (etaDetails[0]['payment_type'].toString().split(',').toList()[payingVia] == 'wallet')
                                                                     ? languages[choosenLanguage]['text_paywallet']
-                                                                    : (etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] == 'card')
+                                                                    : (etaDetails[0]['payment_type'].toString().split(',').toList()[payingVia] == 'card')
                                                                     ? languages[choosenLanguage]['text_paycard']
-                                                                    : (etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] == 'upi')
+                                                                    : (etaDetails[0]['payment_type'].toString().split(',').toList()[payingVia] == 'upi')
                                                                     ? languages[choosenLanguage]['text_payupi']
                                                                     : '',
                                                                 style: GoogleFonts.roboto(
@@ -2241,6 +2251,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                       onTap: () async {
                                                         // here 111111111111111111111
                                                         // etaDetails[choosenVehicle]['user_wallet_balance'] return null
+                                                        choosenVehicle = 0;
                                                         if (((rentalOption.isEmpty && (etaDetails[choosenVehicle]['user_wallet_balance'] >= etaDetails[choosenVehicle]['total'] && etaDetails[choosenVehicle]['has_discount'] == false) || (rentalOption.isEmpty && etaDetails[choosenVehicle]['has_discount'] == true && etaDetails[choosenVehicle]['user_wallet_balance'] >= etaDetails[choosenVehicle]['discounted_totel'])) ||
                                                             (rentalOption.isEmpty &&
                                                                 etaDetails[choosenVehicle]['payment_type'].toString().split(',').toList()[payingVia] !=
@@ -5098,6 +5109,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                     media.width * 0.05),
                                                 child: Button(
                                                     onTap: () {
+                                                      print('confirm 111111111111');
                                                       setState(() {
                                                         _dateTimePicker =
                                                         false;
@@ -5210,6 +5222,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                 ),
                                                 Button(
                                                     onTap: () async {
+                                                      print('confirm 22222222222');
                                                       if (widget.type !=
                                                           1) {
                                                         if (etaDetails[
@@ -5386,6 +5399,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                     ),
                                                     Button(
                                                         onTap: () {
+                                                          print('confirm 3333333333333');
                                                           addressList
                                                               .removeWhere(
                                                                   (element) =>
@@ -6176,6 +6190,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                             ),
                                             Button(
                                                 onTap: () async {
+                                                  print('confirm 4444444444444');
+                                                  choosenVehicle = 0;
                                                   setState(() {
                                                     _isLoading = true;
                                                     dropStopList.clear();
